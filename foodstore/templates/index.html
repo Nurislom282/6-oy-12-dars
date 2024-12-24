@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load news_tags %}
+
+
+{% block content %}
+<!--Categoriyalar-->
+<div class="d-flex justify-content-center">
+    {% get_categories as categories %}
+    {% for category in categories %}
+<div>
+    <a href="{% url 'posts_by_category' category.id  %}" style="margin-right: 10px;" type="button" class="btn btn-primary mt-5 mb-5" data-mdb-ripple-init>
+        {{ category.name }}
+    </a>
+</div>
+    {% endfor %}
+</div>
+<!--End Categoriyalar-->
+
+
+<!--Postlar-->
+<div class="row row-cols-1 row-cols-md-3 g-4">
+    {% for post in posts %}
+    {% include 'components/news/_card.html' %}
+    {% endfor %}
+</div>
+<!-- End Postlar-->
+{% endblock content %}

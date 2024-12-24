@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+<div class="d-flex flex-row-reverse mt-5 mb-2">
+    <a href="{% url 'update_post' post.pk %}" class="btn btn-success">Update</a>
+    <a href="{% url 'delete_post' post.pk %}" class="btn btn-danger">Delete</a>
+</div>
+
+
+<!--Post-->
+{% include 'components/news/_card.html' %}
+<!-- End Post-->
+{% endblock content %}

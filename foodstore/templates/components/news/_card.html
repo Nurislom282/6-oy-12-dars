@@ -1,0 +1,37 @@
+<div class="col">
+    <div class="card h-100">
+        <a href="{% url 'detail' post.pk %}">
+        {% if post.photo %}
+        <img src="{{ post.photo.url }}" class="card-img-top" alt="{{ post.photo.name }}"/>
+        {% else %}
+      <img src="https://mdbcdn.b-cdn.net/img/new/standard/city/042.webp" class="card-img-top" alt="Palm Springs Road"/>
+      {% endif %}
+        </a>
+        <div>
+            {% if '/posts/' in request.path %}
+            {% if post.video %}
+            <video src="{{ post.video.url }}" controls></video>
+            {% endif %}
+            {% endif %}
+        </div>
+        <div class="card-body">
+            <a href="{% url 'detail' post.pk %}">
+        <h5 class="card-title">{{ post.name }}</h5>
+            </a>
+        <p class="card-text">
+            {% if '/posts/' in request.path %}
+            {{ post.content|linebreaks }}
+            {% else %}
+            {{ post.content|truncatewords:10 }}
+            {% endif %}
+        </p>
+      </div>
+      <div class="card-footer d-flex justify-content-between">
+        <small class="text-muted">{{ post.created }}</small>
+        <a href="{% url 'posts_by_category' post.category.id  %}">
+            <small class="text-muted">{{ post.category.name }}</small>
+        </a>
+        <small class="text-muted">{{ post.views }}</small>
+      </div>
+    </div>
+  </div>
