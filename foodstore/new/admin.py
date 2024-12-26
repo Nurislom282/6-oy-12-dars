@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.utils.safestring import mark_safe
 
-from .models import Category,Dish
+from .models import Category,Dish, Comment
 
 admin.site.register(Category)
 
@@ -23,3 +23,4 @@ class PostAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Dish, PostAdmin)
+admin.site.register(Comment)

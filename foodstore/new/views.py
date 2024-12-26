@@ -4,8 +4,8 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 
-from .models import Category, Dish
-from .forms import PostForm, RegistrationForm, LoginForm
+from .models import Category, Dish, Comment
+from .forms import PostForm, RegistrationForm, LoginForm , CommentForm
 
 # Create your views here.
 
@@ -34,12 +34,13 @@ def posts_by_category(request, category_id):
 def post_detail(request: WSGIRequest, pk):
     post = get_object_or_404(Dish, pk=pk)
 
-    post.views += 1
     post.save()
 
     context = {
         "post": post,
-        "title": post.name
+        "title": post.name,
+        "comment_form": CommentForm(),
+        "comments": Comment.objects.filter(post_id=pk)
     }
     return render(request, 'detail.html', context)
 
@@ -146,3 +147,18 @@ def login_view(request: WSGIRequest):
 def logout_view(request: WSGIRequest):
     logout(request)
     return redirect('login')
+
+def comment_save(request:WSGIRequest, dish_id):
+    if request.user.is_aunthenticated:
+        if request.method == 'POST':
+            form = CommentForm(data=request.POST)
+            if form.is_valid():
+                Comment.objectes.create(
+                    text=form.cleaned_data.get("text"),
+                    user=request.user,
+                    post=get_object_or_404(Dish, pk=dish_id)
+                )
+        return redirect('detail', pk=dish_id)
+    else:
+        print("Aval royhat")
+        return redirect('login')

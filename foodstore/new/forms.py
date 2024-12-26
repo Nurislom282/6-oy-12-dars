@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import Category, Dish
+from .models import Category, Dish, Comment
 
 
 class PostForm(forms.Form):
@@ -8,7 +8,7 @@ class PostForm(forms.Form):
         "placeholder": "Ovqat nomi",
         'class': "form-control"
     }))
-    discription = forms.CharField(required=False, widget=forms.Textarea(attrs={
+    description = forms.CharField(required=False, widget=forms.Textarea(attrs={
         "placeholder": "Ovqathaqida",
         'class': "form-control",
         "rows": 3
@@ -45,3 +45,18 @@ class RegistrationForm(forms.Form):
 class LoginForm(forms.Form):
     username = forms.CharField(max_length=150, widget=forms.TextInput())
     password = forms.CharField(min_length=8, widget=forms.PasswordInput())
+
+
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['text']
+
+        widgets = {
+            'text':forms.Textarea(attrs={
+                                  "maxlength": 1000,
+                                  'class':"form-control",
+                                  "id":"textAreaExample",
+                                  "rows":"4"})
+                   }

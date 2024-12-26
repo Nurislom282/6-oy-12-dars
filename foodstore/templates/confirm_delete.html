@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<form method="post" action="{% url 'delete_post' post.pk %}">
+    {% csrf_token %}
+
+    <p><b>{{ post }}</b></p>
+    <p>Siz ushbu maqolani o'chirmoqchimisiz?</p>
+
+    <button type="submit" class="btn btn-primary">Ha😊</button>
+    <a href="{% url 'detail' post.pk %}">Ortga😭</a>
+</form>
+{% endblock content %}

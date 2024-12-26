@@ -11,5 +11,27 @@
 
 <!--Post-->
 {% include 'components/news/_card.html' %}
+
+<form class="mt-5" method="post">
+    {% csrf_token %}
+    <div class="form-outline" data-mdb-input-init>
+            {{ comment_form.text }}
+  <label class="form-label" for="textAreaExample">Message</label>
+    </div>
+    <input type="submit" value="Jonatish" class="btn btn-primary mt-2">
+</form>
+
+
+<div class="mt-5">
+    {% for comment in comments %}
+    <div class="card text-bg-success mb-3" style="max-width: 90rem;">
+      <div class="card-header">{{ comment.user.username }}</div>
+      <div class="card-body">
+        <h5 class="card-title">{{ comment.created }}</h5>
+        <p class="card-text">{{ comment.text }}</p>
+      </div>
+    </div>
+</div>
+{% endfor %}
 <!-- End Post-->
 {% endblock content %}
